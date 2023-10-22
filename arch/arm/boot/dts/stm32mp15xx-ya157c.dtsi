@@ -147,6 +147,26 @@
                  enable-active-high;
     	};
 
+	//LM ADD next 2 Node
+	v1v8_audio: regulator-v1v8-audio {
+		compatible = "regulator-fixed";
+		regulator-name = "v1v8_audio";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+	sound: sound {
+		compatible = "audio-graph-card";
+		label = "STM32MP1-DK";
+		routing =
+			"Playback" , "MCLK",
+			"Capture" , "MCLK",
+			"MICL" , "Mic Bias";
+		dais = <&sai1a_port &sai1b_port>;
+		status = "okay";
+	};
+
 };
 
 /*myir pin header
