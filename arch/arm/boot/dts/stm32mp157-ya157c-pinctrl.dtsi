@@ -1474,6 +1474,46 @@
 					bias-disable;
 				};
 			};
+
+//LM Add@2023-10-22 ---------------------------------------------------
+	sai1a_pins_a: sai1a-0 {
+		pins {
+			pinmux = <STM32_PINMUX('E', 6, AF6)>; /* SAI1_SD_A */
+			drive-push-pull;
+			bias-disable;
+		};
+	};
+
+	sai1a_sleep_pins_a: sai1a-1 {
+		pins {
+			pinmux = <STM32_PINMUX('E', 6, ANALOG)>; /* SAI1_SD_A */
+		};
+	};
+
+
+	sai1b_pins_b: sai1b-2 {
+		pins {
+			pinmux = <STM32_PINMUX('F', 8, AF10)>, /* SAI1_SCK_B */
+				 <STM32_PINMUX('F', 6, AF10)>, /* SAI1_SD_B */
+				 <STM32_PINMUX('F', 9, AF10)>, /* SAI1_FS_B */
+				 <STM32_PINMUX('F', 7, AF10)>; /* SAI1_MCLK_B */
+			slew-rate = <0>;
+			drive-push-pull;
+			bias-disable;
+		};
+	};
+
+	sai1b_sleep_pins_b: sai1b-3 {
+		pins {
+			pinmux = <STM32_PINMUX('F', 8, AF10)>, /* SAI1_SCK_B */
+				 <STM32_PINMUX('F', 6, AF10)>, /* SAI1_SD_B */
+				 <STM32_PINMUX('F', 9, AF10)>, /* SAI1_FS_B */
+				 <STM32_PINMUX('F', 7, AF10)>; /* SAI1_MCLK_B */
+		};
+	};
+	//LM add end----------------------------------------------
+
+
 		};
 			
 

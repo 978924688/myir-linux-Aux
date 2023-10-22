@@ -754,6 +754,9 @@
 		};
 	};
 
+	
+
+
 	sai2a_pins_a: sai2a-0 {
 		pins {
 			pinmux = <STM32_PINMUX('I', 5, AF10)>, /* SAI2_SCK_A */
