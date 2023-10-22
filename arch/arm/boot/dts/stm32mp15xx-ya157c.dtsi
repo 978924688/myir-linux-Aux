@@ -715,3 +715,48 @@ cs42l51: cs42l51@4a {
 	vdda-supply = <&vdd>;
 	status = "okay";
 };
+
+//LM Add@20231022
+&sai1 {
+	clocks = <&rcc SAI1>, <&rcc PLL3_Q>, <&rcc PLL3_R>;
+	clock-names = "pclk", "x8k", "x11k";
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sai1a_pins_a>, <&sai1b_pins_b>;
+	pinctrl-1 = <&sai1a_sleep_pins_a>, <&sai1b_sleep_pins_b>;
+	status = "okay";
+
+	sai1b: audio-controller@4400a024 {
+		#clock-cells = <0>;
+		dma-names = "tx";
+		clocks = <&rcc SAI1_K>;
+		clock-names = "sai_ck";
+		status = "okay";
+
+		sai1b_port: port {
+			sai1b_endpoint: endpoint {
+				remote-endpoint = <&cs42l51_tx_endpoint>;
+				format = "i2s";
+				mclk-fs = <256>;
+				dai-tdm-slot-num = <2>;
+				dai-tdm-slot-width = <32>;
+			};
+		};
+	};
+	sai1a: audio-controller@4400a004 {
+		dma-names = "rx";
+		st,sync = <&sai1b 2>;
+		clocks = <&rcc SAI1_K>, <&sai1b>;
+		clock-names = "sai_ck", "MCLK";
+		status = "okay";
+
+		sai1a_port: port {
+			sai1a_endpoint: endpoint {
+				remote-endpoint = <&cs42l51_rx_endpoint>;
+				format = "i2s";
+				mclk-fs = <256>;
+				dai-tdm-slot-num = <2>;
+				dai-tdm-slot-width = <32>;
+			};
+		};
+	};
+};
