@@ -709,24 +709,29 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
 	for (i = 0; i < ARRAY_SIZE(cs42l51->supplies); i++)
 		cs42l51->supplies[i].supply = cs42l51_supply_names[i];
 
-	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(cs42l51->supplies),
-				      cs42l51->supplies);
-	if (ret != 0) {
-		dev_err(dev, "Failed to request supplies: %d\n", ret);
-		return ret;
-	}
+	//LM TBD VD  VL  VA
+	// ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(cs42l51->supplies),
+	// 			      cs42l51->supplies);
+	// if (ret != 0) {
+	// 	dev_err(dev, "Failed to request supplies: %d\n", ret);
+	// 	return ret;
+	// }
 
-	ret = regulator_bulk_enable(ARRAY_SIZE(cs42l51->supplies),
-				    cs42l51->supplies);
-	if (ret != 0) {
-		dev_err(dev, "Failed to enable supplies: %d\n", ret);
-		return ret;
-	}
+	// ret = regulator_bulk_enable(ARRAY_SIZE(cs42l51->supplies),
+	// 			    cs42l51->supplies);
+	// if (ret != 0) {
+	// 	dev_err(dev, "Failed to enable supplies: %d\n", ret);
+	// 	return ret;
+	// }
 
 	cs42l51->reset_gpio = devm_gpiod_get_optional(dev, "reset",
 						      GPIOD_OUT_LOW);
-	if (IS_ERR(cs42l51->reset_gpio))
+	// if (IS_ERR(cs42l51->reset_gpio))
+	// 	return PTR_ERR(cs42l51->reset_gpio);
+		if (IS_ERR(cs42l51->reset_gpio)) {
+		dev_err(dev, "LM--- Failed IS_ERR gpio: %d\n", IS_ERR(cs42l51->reset_gpio));
 		return PTR_ERR(cs42l51->reset_gpio);
+	}
 
 	if (cs42l51->reset_gpio) {
 		dev_dbg(dev, "Release reset gpio\n");
@@ -758,8 +763,8 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
 	return 0;
 
 error:
-	regulator_bulk_disable(ARRAY_SIZE(cs42l51->supplies),
-			       cs42l51->supplies);
+	// regulator_bulk_disable(ARRAY_SIZE(cs42l51->supplies),
+	// 		       cs42l51->supplies);
 	return ret;
 }
 EXPORT_SYMBOL_GPL(cs42l51_probe);

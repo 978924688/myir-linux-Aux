@@ -83,7 +83,7 @@
     pinctrl-names = "default", "sleep";
     pinctrl-0 = <&ltdc_pins_a>;
     pinctrl-1 = <&ltdc_pins_sleep_a>;
-    status = "okay";
+    status = "disabled"; //LM Didabled
     port {
             #address-cells = <1>;
             #size-cells = <0>;
